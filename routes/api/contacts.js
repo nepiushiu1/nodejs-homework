@@ -23,6 +23,14 @@ const newContactSchema = Joi.object({
     .required(),
 });
 
+const contactChangesSchema = Joi.object({
+  name: Joi.string().min(3).max(20),
+  email: Joi.string(),
+  phone: Joi.string().pattern(
+    /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/
+  ),
+});
+
 router.get("/", async (req, res, next) => {
   try {
     const contacts = await listContacts();
@@ -87,7 +95,7 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-    const { error } = newContactSchema.validate(req.body);
+    const { error } = contactChangesSchema.validate(req.body);
     if (error) {
       return res.status(400).json({
         status: "error",
