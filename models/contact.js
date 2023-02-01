@@ -1,60 +1,33 @@
 const { Schema, model } = require("mongoose");
+// const { handleSchemaValidationErrors } = require("../helpers");
 
-const Joi = require("joi");
-
-const contactShema = Schema(
+const contactSchema = new Schema(
   {
     name: {
       type: String,
       required: [true, "Set name for contact"],
-      minlength: 2,
-      maxlength: 30,
     },
     email: {
       type: String,
-      required: [true, "Set email for contact"],
+      required: true,
     },
     phone: {
       type: String,
-      required: [true, "Set phone number for contact"],
+      unique: true,
+      required: true,
     },
     favorite: {
       type: Boolean,
       default: false,
     },
   },
-  { versionKey: false, timestamps: true }
+  {
+    versionKey: false,
+  }
 );
 
-const newContactSchema = Joi.object({
-  name: Joi.string().min(3).max(20).required(),
-  email: Joi.string().required(),
-  phone: Joi.string()
-    .pattern(
-      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/
-    )
-    .required(),
-  favorite: Joi.bool(),
-});
+// contactSchema.post("save", handleSchemaValidationErrors);
 
-const contactChangesSchema = Joi.object({
-  name: Joi.string().min(3).max(20),
-  email: Joi.string(),
-  phone: Joi.string().pattern(
-    /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/
-  ),
-  favorite: Joi.bool(),
-});
+const Contact = model("contact", contactSchema);
 
-const favoriteContact = Joi.object({
-  favorite: Joi.bool().required(),
-});
-
-const Contact = model("contact", contactShema);
-
-model.exports = {
-  Contact,
-  newContactSchema,
-  contactChangesSchema,
-  favoriteContact,
-};
+module.exports = Contact;
