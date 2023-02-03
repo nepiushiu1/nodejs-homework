@@ -1,5 +1,13 @@
 const contactChangesSchema = require("./contactChangesSchema");
 const favoriteContact = require("./favoriteContact");
 const newContactSchema = require("./newContactSchema");
+const userSchema = require("./userSchema");
+const userLoginSchema = require("./userLoginSchema");
 
-module.exports = { contactChangesSchema, favoriteContact, newContactSchema };
+module.exports = {
+  contactChangesSchema,
+  favoriteContact,
+  newContactSchema,
+  userSchema,
+  userLoginSchema,
+};
