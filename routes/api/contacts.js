@@ -11,20 +11,22 @@ const router = express.Router();
 
 router.get("/", users, ctrlWrapper(ctrl.getAll));
 
-router.get("/:contactId", ctrlWrapper(ctrl.getById));
+router.get("/:contactId", users, ctrlWrapper(ctrl.getById));
 
 router.post("/", users, validation(newContactSchema), ctrlWrapper(ctrl.add));
 
-router.delete("/:contactId", ctrlWrapper(ctrl.removeById));
+router.delete("/:contactId", users, ctrlWrapper(ctrl.removeById));
 
 router.put(
   "/:contactId",
+  users,
   validation(contactChangesSchema),
   ctrlWrapper(ctrl.updateById)
 );
 
 router.patch(
   "/:contactId/favorite",
+  users,
   validation(favoriteContact),
   ctrlWrapper(ctrl.updateFavorite)
 );
