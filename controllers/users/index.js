@@ -1,3 +1,3 @@
 const getCurrent = require("./getCurrent");
 
-module.export = { getCurrent };
+module.exports = { getCurrent };

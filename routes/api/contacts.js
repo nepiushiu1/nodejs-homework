@@ -1,6 +1,11 @@
 const express = require("express");
 const { contacts: ctrl } = require("../../controllers");
-const { users, validation, ctrlWrapper } = require("../../middlewares");
+const {
+  users,
+  validation,
+  ctrlWrapper,
+  isValidId,
+} = require("../../middlewares");
 const {
   newContactSchema,
   contactChangesSchema,
@@ -15,11 +20,12 @@ router.get("/:contactId", users, ctrlWrapper(ctrl.getById));
 
 router.post("/", users, validation(newContactSchema), ctrlWrapper(ctrl.add));
 
-router.delete("/:contactId", users, ctrlWrapper(ctrl.removeById));
+router.delete("/:contactId", users, isValidId, ctrlWrapper(ctrl.removeById));
 
 router.put(
   "/:contactId",
   users,
+  isValidId,
   validation(contactChangesSchema),
   ctrlWrapper(ctrl.updateById)
 );
@@ -27,6 +33,7 @@ router.put(
 router.patch(
   "/:contactId/favorite",
   users,
+  isValidId,
   validation(favoriteContact),
   ctrlWrapper(ctrl.updateFavorite)
 );

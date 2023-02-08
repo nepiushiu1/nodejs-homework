@@ -1,12 +1,13 @@
 // const User = require("../../models/user");
 
 const getCurrent = async (req, res) => {
-  const { email, password } = req.user;
-  res.json({
-    status: "success",
-    code: 201,
-    data: { user: { email, password } },
+  const { email, subscription } = req.user;
+  res.status(200).json({
+    user: {
+      email,
+      subscription,
+    },
   });
 };
 
-module.export = getCurrent;
+module.exports = getCurrent;
