@@ -4,24 +4,38 @@ const { NotFound } = require("http-errors");
 
 const getAll = async (req, res) => {
   const { _id } = req.user;
-  const { page = 1, limit = 10 } = req.query;
+  const { page = 1, limit = 20, favorite, name, email } = req.query;
   const skip = (page - 1) * limit;
 
   const filters = { owner: _id };
 
-  const contacts = await Contact.find(filters, "", {
-    skip,
-    limit: Number(limit),
-  }).populate("owner", "_id name email");
+  if (favorite) filters.favorite = favorite;
 
-  if (contacts.length === 0) {
-    throw new NotFound("Contact not found");
+  if (name) filters.name = name;
+
+  if (email) filters.email = email;
+
+  if (filters) {
+    const contacts = await Contact.find(filters, "", {
+      skip,
+      limit: Number(limit),
+    }).populate("owner", "_id name email");
+
+    if (contacts.length === 0) {
+      throw new NotFound("Contact not found");
+    }
+    res.json({
+      data: {
+        contacts,
+      },
+    });
+  } else {
+    const contacts = await Contact.find({ owner: _id }).populate(
+      "owner",
+      "_id name email"
+    );
+    res.json(contacts);
   }
-  res.json({
-    data: {
-      contacts,
-    },
-  });
 };
 
 module.exports = getAll;
