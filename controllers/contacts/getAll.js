@@ -15,7 +15,7 @@ const getAll = async (req, res) => {
 
   if (email) filters.email = email;
 
-  if (filters) {
+  if (favorite || name || email) {
     const contacts = await Contact.find(filters, "", {
       skip,
       limit: Number(limit),
