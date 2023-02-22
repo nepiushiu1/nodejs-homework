@@ -15,7 +15,7 @@ const getAll = async (req, res) => {
 
   if (email) filters.email = email;
 
-  if (favorite || name || email) {
+  if (filters.favorite || filters.name || filters.email) {
     const contacts = await Contact.find(filters, "", {
       skip,
       limit: Number(limit),
@@ -39,4 +39,3 @@ const getAll = async (req, res) => {
 };
 
 module.exports = getAll;
-// 1
