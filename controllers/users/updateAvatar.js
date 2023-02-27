@@ -9,7 +9,9 @@ const updateAvatar = async (req, res) => {
   try {
     const { path: tempUpload, originalname } = req.file;
     const { _id: id } = req.user;
-    const imageName = `${id}_${originalname}`;
+    const [extenstion] = originalname.split(".").reverse();
+
+    const imageName = `${id}_${extenstion}`;
 
     const resultUpload = path.join(avatarsDir, imageName);
     Jimp.read(tempUpload, (error, image) => {
