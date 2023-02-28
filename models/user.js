@@ -21,6 +21,10 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
+    avatarURL: {
+      type: String,
+      required: true,
+    },
   },
   {
     versionKey: false,
@@ -38,6 +42,4 @@ userSchema.methods.comparePassword = function (password) {
 
 const User = model("user", userSchema);
 
-module.exports = {
-  User,
-};
+module.exports = User;
