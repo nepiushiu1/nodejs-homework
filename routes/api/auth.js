@@ -15,6 +15,7 @@ router.post("/register", validation(userSchema), ctrlWrapper(ctrl.register));
 router.post("/login", validation(userLoginSchema), ctrlWrapper(ctrl.login));
 
 router.get("logout", users, ctrlWrapper(ctrl.logout));
+
 router.patch(
   "/",
   users,
