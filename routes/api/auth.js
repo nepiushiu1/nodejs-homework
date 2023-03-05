@@ -6,6 +6,7 @@ const {
   userSchema,
   userLoginSchema,
   updateSubscriptionValidation,
+  verifyEmailShema,
 } = require("../../schemas");
 
 const router = express.Router();
@@ -15,6 +16,12 @@ router.post("/register", validation(userSchema), ctrlWrapper(ctrl.register));
 router.post("/login", validation(userLoginSchema), ctrlWrapper(ctrl.login));
 
 router.get("logout", users, ctrlWrapper(ctrl.logout));
+
+router.post(
+  "/verify",
+  validation(verifyEmailShema),
+  ctrlWrapper(ctrl.resendVerifyEmail)
+);
 
 router.patch(
   "/",
