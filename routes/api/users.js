@@ -6,6 +6,8 @@ const { users: ctrl } = require("../../controllers");
 const router = express.Router();
 
 router.get("/current", users, ctrlWrapper(ctrl.getCurrent));
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+
 router.patch(
   "/avatars",
   users,
@@ -14,4 +16,3 @@ router.patch(
 );
 
 module.exports = router;
-// 1
